@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GoldUI : MonoBehaviour {
 	public Text goldAmountText;
-	public Gold gold;
+	public Resource[] resources;
 
-	void UpdateGoldAmountLabel() {
-		this.goldAmountText.text = this.gold.GoldAmount.ToString("0 Gold");
+	void UpdateGoldAmountLabel()
+	{
+		this.goldAmountText.text = "";
+		foreach (var resource in resources)
+		{
+			this.goldAmountText.text += resource.GoldAmount.ToString($"0 {resource.name}") + "\n";
+		}
 	}
 
 	void Update() {

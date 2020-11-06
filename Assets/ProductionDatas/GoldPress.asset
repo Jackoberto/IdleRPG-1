@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8796e54c1bdf471b8f2ef7f5cceade73, type: 3}
+  m_Name: GoldPress
+  m_EditorClassIdentifier: 
+  costs: 100
+  costsResource: {fileID: 11400000, guid: f566e07c3243e4382bc8c16ab032d9ce, type: 2}
+  producesResource: {fileID: 11400000, guid: 7748c5fb7afec4b3d8e3306f27e1cb51, type: 2}
+  costMultiplier: 1.1
+  productionTime: 1
+  productionAmount: 1
+  productionMultiplier: 1.05

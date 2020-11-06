@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu]
-public class Gold : ScriptableObject {
+public class Resource : ScriptableObject {
 	public int goldAmountPerClick = 5;
-	const string goldPlayerPrefKey = "Gold";
+	[SerializeField] private string goldPlayerPrefKey = "Gold";
 
 	public int GoldAmount {
 		get => PlayerPrefs.GetInt(goldPlayerPrefKey, 1);

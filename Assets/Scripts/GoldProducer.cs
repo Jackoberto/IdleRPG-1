@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GoldProducer : MonoBehaviour {
 	public GoldProductionData GoldProductionData;
 	public Text goldAmountText;
 	public ProductionPopUp popupPrefab;
-	public Gold gold;
 	public Purchasable amount;
 	public Purchasable upgrade;
 	float elapsedTime;
@@ -13,8 +13,8 @@ public class GoldProducer : MonoBehaviour {
 	public void SetUp(GoldProductionData goldProductionData) {
 		this.GoldProductionData = goldProductionData;
 		this.gameObject.name = goldProductionData.name;
-		this.amount.SetUp(goldProductionData, this.gold, "Count");
-		this.upgrade.SetUp(goldProductionData, this.gold, "Level");
+		this.amount.SetUp(goldProductionData, goldProductionData.costsResource, "Count");
+		this.upgrade.SetUp(goldProductionData, goldProductionData.costsResource, "Level");
 	}
 
 	public void Purchase() => this.amount.Purchase();
@@ -42,7 +42,7 @@ public class GoldProducer : MonoBehaviour {
 	void ProduceGold() {
 		if (this.amount.Amount == 0)
 			return;
-		this.gold.GoldAmount += Mathf.RoundToInt(CalculateProductionAmount());
+		GoldProductionData.producesResource.GoldAmount += Mathf.RoundToInt(CalculateProductionAmount());
 		var instance = Instantiate(this.popupPrefab, this.transform);
 		instance.GetComponent<Text>().text = $"+{CalculateProductionAmount()}";
 	}
