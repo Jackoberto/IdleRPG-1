@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8796e54c1bdf471b8f2ef7f5cceade73, type: 3}
-  m_Name: GoldFountain
+  m_Name: WoodCutter
   m_EditorClassIdentifier: 
   costs: 1000
   costsResource: {fileID: 11400000, guid: c41718927120844239b7ad61f84e68a9, type: 2}
