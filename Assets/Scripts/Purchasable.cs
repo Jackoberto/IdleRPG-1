@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Purchasable {
 	public Text buttonLabel;
 	GoldProductionData goldProductionData;
+	private Resource resource;
 	string productId;
 
 	bool IsAffordable => goldProductionData.costsResource.GoldAmount >= this.goldProductionData.GetActualCosts(this.Amount);
@@ -17,7 +18,7 @@ public class Purchasable {
 
 	public void SetUp(GoldProductionData goldProductionData, Resource resource, string productId) {
 		this.goldProductionData = goldProductionData;
-		goldProductionData.costsResource = resource;
+		this.resource = resource;
 		this.productId = productId;
 		this.buttonLabel.text = $"Add {productId} for {goldProductionData.GetActualCosts(this.Amount)} {this.goldProductionData.costsResource.name}";
 	}
@@ -25,9 +26,9 @@ public class Purchasable {
 	public void Purchase() {
 		if (!this.IsAffordable) 
 			return;
-		goldProductionData.costsResource.GoldAmount -= this.goldProductionData.GetActualCosts(this.Amount);
+		this.resource.GoldAmount -= this.goldProductionData.GetActualCosts(this.Amount);
 		this.Amount += 1;
-		this.buttonLabel.text = $"Add {this.productId} for {this.goldProductionData.GetActualCosts(this.Amount)} {this.goldProductionData.costsResource.name}";
+		this.buttonLabel.text = $"Add {this.productId} for {this.goldProductionData.GetActualCosts(this.Amount)} {this.resource.name}";
 	}
 
 	public void Update() => UpdateTextColor();
