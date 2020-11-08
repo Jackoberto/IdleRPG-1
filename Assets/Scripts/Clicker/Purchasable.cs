@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [Serializable]
 public class Purchasable {
 	public Text buttonLabel;
-	GoldProductionData goldProductionData;
+	ProductionData goldProductionData;
 	private Resource resource;
 	string productId;
 
@@ -16,7 +16,7 @@ public class Purchasable {
 		private set => PlayerPrefs.SetInt(this.goldProductionData.name+"_"+this.productId, value);
 	}
 
-	public void SetUp(GoldProductionData goldProductionData, Resource resource, string productId) {
+	public void SetUp(ProductionData goldProductionData, Resource resource, string productId) {
 		this.goldProductionData = goldProductionData;
 		this.resource = resource;
 		this.productId = productId;

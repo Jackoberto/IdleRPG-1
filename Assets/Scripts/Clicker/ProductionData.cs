@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu]
-public class GoldProductionData : ScriptableObject { 
+public class ProductionData : ScriptableObject { 
 	[SerializeField] int costs = 100;
 	public Resource costsResource;
 	public Resource producesResource;

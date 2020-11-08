@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1374812354291110761}
-  - component: {fileID: 5180716211921746248}
   - component: {fileID: 4310924990199828131}
+  - component: {fileID: 9157258862879126923}
   m_Layer: 0
-  m_Name: GoldProducer
+  m_Name: Producer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,28 +40,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 55.66}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5180716211921746248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5180716211921746249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31fbc44c64cac4a0a99762d73dde3e47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GoldProductionData: {fileID: 0}
-  goldAmountText: {fileID: 5180716212640738329}
-  upgradeButtonLabel: {fileID: 5485803915242519513}
-  popupPrefab: {fileID: 7931557911440886001, guid: 4a2c1f99b5e8342469ea5b1efbf4b803,
-    type: 3}
-  gold: {fileID: 11400000, guid: c41718927120844239b7ad61f84e68a9, type: 2}
-  amount:
-    buttonLabel: {fileID: 5180716212195582697}
-  upgrade:
-    buttonLabel: {fileID: 5485803915242519513}
 --- !u!114 &4310924990199828131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +60,26 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &9157258862879126923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5180716211921746249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4a3293be3b2a024eacf0db5f7ef1e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productionData: {fileID: 0}
+  goldAmountText: {fileID: 5180716212640738329}
+  popupPrefab: {fileID: 7931557911440886001, guid: 4a2c1f99b5e8342469ea5b1efbf4b803,
+    type: 3}
+  amount:
+    buttonLabel: {fileID: 5180716212195582697}
+  upgrade:
+    buttonLabel: {fileID: 5485803915242519513}
 --- !u!1 &5180716212195582703
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +140,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -222,6 +221,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -279,7 +279,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5180716211921746248}
+      - m_Target: {fileID: 9157258862879126923}
+        m_TargetAssemblyTypeName: Producer, Assembly-CSharp
         m_MethodName: Purchase
         m_Mode: 1
         m_Arguments:
@@ -350,6 +351,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.7538873, b: 0.36320752, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -430,6 +432,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -487,7 +490,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5180716211921746248}
+      - m_Target: {fileID: 9157258862879126923}
+        m_TargetAssemblyTypeName: Producer, Assembly-CSharp
         m_MethodName: Upgrade
         m_Mode: 1
         m_Arguments:
@@ -558,6 +562,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
