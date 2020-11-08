@@ -9,7 +9,7 @@ public class Purchasable {
 	private Resource resource;
 	string productId;
 
-	bool IsAffordable => goldProductionData.costsResource.GoldAmount >= this.goldProductionData.GetActualCosts(this.Amount);
+	bool IsAffordable => goldProductionData.costsResource.ResourceAmount >= this.goldProductionData.GetActualCosts(this.Amount);
 
 	public int Amount {
 		get => PlayerPrefs.GetInt(this.goldProductionData.name+"_"+this.productId, 0);
@@ -26,7 +26,7 @@ public class Purchasable {
 	public void Purchase() {
 		if (!this.IsAffordable) 
 			return;
-		this.resource.GoldAmount -= this.goldProductionData.GetActualCosts(this.Amount);
+		this.resource.ResourceAmount -= this.goldProductionData.GetActualCosts(this.Amount);
 		this.Amount += 1;
 		this.buttonLabel.text = $"Add {this.productId} for {this.goldProductionData.GetActualCosts(this.Amount)} {this.resource.name}";
 	}

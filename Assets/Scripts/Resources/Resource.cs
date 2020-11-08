@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class Resource : ScriptableObject {
-	public int goldAmountPerClick = 5;
-	[SerializeField] private string goldPlayerPrefKey = "Gold";
+	[FormerlySerializedAs("goldAmountPerClick")] public int resourceAmountPerClick = 5;
+	[FormerlySerializedAs("goldPlayerPrefKey")] [SerializeField] private string resourcePlayerPrefKey = "Gold";
 
-	public int GoldAmount {
-		get => PlayerPrefs.GetInt(goldPlayerPrefKey, 1);
-		set => PlayerPrefs.SetInt(goldPlayerPrefKey, value);
+	public int ResourceAmount {
+		get => PlayerPrefs.GetInt(resourcePlayerPrefKey, 1);
+		set => PlayerPrefs.SetInt(resourcePlayerPrefKey, value);
 	}
 
-	public void ProduceGold() {
-		this.GoldAmount += this.goldAmountPerClick; // this.GoldAmount = this.GoldAmount + this.goldAmountPerClick;
+	public void ProduceResource() {
+		this.ResourceAmount += this.resourceAmountPerClick; // this.resourceAmount = this.resourceAmount + this.resourceAmountPerClick;
 	}
 }

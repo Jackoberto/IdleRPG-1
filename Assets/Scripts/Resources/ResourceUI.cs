@@ -6,12 +6,12 @@ public class ResourceUI : MonoBehaviour {
 	public Text resourceAmountText;
 	public Resource resource;
 
-	void UpdateGoldAmountLabel()
+	void UpdateResourceAmountLabel()
 	{
-		this.resourceAmountText.text = resource.GoldAmount.ToString($"0 {resource.name}");
+		this.resourceAmountText.text = resource.ResourceAmount.ToString($"0 {resource.name}");
 	}
 
 	void Update() {
-		UpdateGoldAmountLabel();
+		UpdateResourceAmountLabel();
 	}
 }

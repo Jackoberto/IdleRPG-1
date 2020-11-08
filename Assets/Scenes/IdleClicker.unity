@@ -685,7 +685,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: c41718927120844239b7ad61f84e68a9, type: 2}
         m_TargetAssemblyTypeName: 
-        m_MethodName: ProduceGold
+        m_MethodName: ProduceResource
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

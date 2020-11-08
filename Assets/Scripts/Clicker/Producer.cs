@@ -1,10 +1,10 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Producer : MonoBehaviour {
 	public ProductionData productionData;
-	public Text goldAmountText;
+	[FormerlySerializedAs("goldAmountText")] public Text resourceAmountText;
 	public ProductionPopUp popupPrefab;
 	public Purchasable amount;
 	public Purchasable upgrade;
@@ -30,19 +30,19 @@ public class Producer : MonoBehaviour {
 	void UpdateProduction() {
 		this.elapsedTime += Time.deltaTime;
 		if (this.elapsedTime >= this.productionData.productionTime) {
-			ProduceGold();
+			ProduceResource();
 			this.elapsedTime -= this.productionData.productionTime; // DO NOT SET TO ZERO HERE
 		}
 	}
 
 	void UpdateTitleLabel() {
-		this.goldAmountText.text = $"{this.amount.Amount}x {this.productionData.name} Level {this.upgrade.Amount}";
+		this.resourceAmountText.text = $"{this.amount.Amount}x {this.productionData.name} Level {this.upgrade.Amount}";
 	}
 
-	void ProduceGold() {
+	void ProduceResource() {
 		if (this.amount.Amount == 0)
 			return;
-		productionData.producesResource.GoldAmount += Mathf.RoundToInt(CalculateProductionAmount());
+		productionData.producesResource.ResourceAmount += Mathf.RoundToInt(CalculateProductionAmount());
 		var instance = Instantiate(this.popupPrefab, this.transform);
 		instance.GetComponent<Text>().text = $"+{CalculateProductionAmount()} {productionData.producesResource.name}";
 	}

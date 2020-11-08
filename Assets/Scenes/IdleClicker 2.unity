@@ -460,7 +460,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 119760456}
-        m_MethodName: ProduceGold
+        m_MethodName: ProduceResource
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
