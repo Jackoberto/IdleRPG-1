@@ -4,8 +4,8 @@ using UnityEngine;
 public class ProductionData : ScriptableObject { 
 	[SerializeField] int costs = 100;
 	public Resource costsResource;
-	public Resource producesResource;
 	[SerializeField] float costMultiplier = 1.1f;
+	public Resource producesResource;
 	public float productionTime = 1f;
 	[SerializeField] int productionAmount = 1;
 	[SerializeField] float productionMultiplier = 1.05f;

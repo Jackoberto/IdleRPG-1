@@ -5,30 +5,30 @@ using UnityEngine.UI;
 [Serializable]
 public class Purchasable {
 	public Text buttonLabel;
-	ProductionData goldProductionData;
+	ProductionData productionData;
 	private Resource resource;
 	string productId;
 
-	bool IsAffordable => goldProductionData.costsResource.ResourceAmount >= this.goldProductionData.GetActualCosts(this.Amount);
+	bool IsAffordable => productionData.costsResource.ResourceAmount >= this.productionData.GetActualCosts(this.Amount);
 
 	public int Amount {
-		get => PlayerPrefs.GetInt(this.goldProductionData.name+"_"+this.productId, 0);
-		private set => PlayerPrefs.SetInt(this.goldProductionData.name+"_"+this.productId, value);
+		get => PlayerPrefs.GetInt(this.productionData.name+"_"+this.productId, 0);
+		private set => PlayerPrefs.SetInt(this.productionData.name+"_"+this.productId, value);
 	}
 
-	public void SetUp(ProductionData goldProductionData, Resource resource, string productId) {
-		this.goldProductionData = goldProductionData;
+	public void SetUp(ProductionData productionData, Resource resource, string productId) {
+		this.productionData = productionData;
 		this.resource = resource;
 		this.productId = productId;
-		this.buttonLabel.text = $"Add {productId} for {goldProductionData.GetActualCosts(this.Amount)} {this.goldProductionData.costsResource.name}";
+		this.buttonLabel.text = $"Add {productId} for {productionData.GetActualCosts(this.Amount)} {this.productionData.costsResource.name}";
 	}
 
 	public void Purchase() {
 		if (!this.IsAffordable) 
 			return;
-		this.resource.ResourceAmount -= this.goldProductionData.GetActualCosts(this.Amount);
+		this.resource.ResourceAmount -= this.productionData.GetActualCosts(this.Amount);
 		this.Amount += 1;
-		this.buttonLabel.text = $"Add {this.productId} for {this.goldProductionData.GetActualCosts(this.Amount)} {this.resource.name}";
+		this.buttonLabel.text = $"Add {this.productId} for {this.productionData.GetActualCosts(this.Amount)} {this.resource.name}";
 	}
 
 	public void Update() => UpdateTextColor();

@@ -6,24 +6,24 @@ public class Producer : MonoBehaviour {
 	public ProductionData productionData;
 	[FormerlySerializedAs("goldAmountText")] public Text resourceAmountText;
 	public ProductionPopUp popupPrefab;
-	public Purchasable amount;
+	[FormerlySerializedAs("amount")] public Purchasable count;
 	public Purchasable upgrade;
 	float elapsedTime;
 
 	public void SetUp(ProductionData productionData) {
 		this.productionData = productionData;
 		this.gameObject.name = productionData.name;
-		this.amount.SetUp(productionData, productionData.costsResource, "Count");
+		this.count.SetUp(productionData, productionData.costsResource, "Count");
 		this.upgrade.SetUp(productionData, productionData.costsResource, "Level");
 	}
 
-	public void Purchase() => this.amount.Purchase();
+	public void Purchase() => this.count.Purchase();
 	public void Upgrade() => this.upgrade.Purchase();
 
 	void Update() {
 		UpdateProduction();
 		UpdateTitleLabel();
-		this.amount.Update();
+		this.count.Update();
 		this.upgrade.Update();
 	}
 
@@ -36,11 +36,11 @@ public class Producer : MonoBehaviour {
 	}
 
 	void UpdateTitleLabel() {
-		this.resourceAmountText.text = $"{this.amount.Amount}x {this.productionData.name} Level {this.upgrade.Amount}";
+		this.resourceAmountText.text = $"{this.count.Amount}x {this.productionData.name} Level {this.upgrade.Amount}";
 	}
 
 	void ProduceResource() {
-		if (this.amount.Amount == 0)
+		if (this.count.Amount == 0)
 			return;
 		productionData.producesResource.ResourceAmount += Mathf.RoundToInt(CalculateProductionAmount());
 		var instance = Instantiate(this.popupPrefab, this.transform);
@@ -48,6 +48,6 @@ public class Producer : MonoBehaviour {
 	}
 
 	float CalculateProductionAmount() {
-		return this.productionData.GetProductionAmount(this.upgrade.Amount) * this.amount.Amount;
+		return this.productionData.GetProductionAmount(this.upgrade.Amount) * this.count.Amount;
 	}
 }
