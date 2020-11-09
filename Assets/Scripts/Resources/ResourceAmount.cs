@@ -1,7 +1,15 @@
-﻿[System.Serializable]
-public class ResourceAmount
+﻿namespace Resources
 {
-    public Resource resourceType;
-    public int amount;
-    public int ResourceCount => resourceType.ResourceAmount;
+    [System.Serializable]
+    public struct ResourceAmount
+    {
+        public Resource resourceType;
+        public int amount;
+
+        public ResourceAmount(Resource resourceType, int amount)
+        {
+            this.resourceType = resourceType;
+            this.amount = amount;
+        }
+    }
 }
