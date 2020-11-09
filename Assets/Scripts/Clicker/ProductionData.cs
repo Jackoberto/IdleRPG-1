@@ -1,22 +1,28 @@
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ProductionData : ScriptableObject { 
-	[SerializeField] int costs = 100;
-	public Resource costsResource;
+public class ProductionData : ScriptableObject {
+	public ResourceAmount costs;
 	[SerializeField] float costMultiplier = 1.1f;
-	public Resource producesResource;
+	public ResourceAmount produce;
 	public float productionTime = 1f;
-	[SerializeField] int productionAmount = 1;
 	[SerializeField] float productionMultiplier = 1.05f;
 
-	public int GetActualCosts(int amount) {
-		var result = this.costs * Mathf.Pow(this.costMultiplier, amount);
-		return Mathf.RoundToInt(result);
+	public ResourceAmount GetActualCosts(int amount) {
+		var result = this.costs.amount * Mathf.Pow(this.costMultiplier, amount);
+		var newCostResource = new ResourceAmount
+		{
+			resourceType = costs.resourceType, amount = Mathf.RoundToInt(result)
+		};
+		return newCostResource;
 	}
 	
-	public int GetProductionAmount(int upgradeAmount) {
-		var result = this.productionAmount * Mathf.Pow(this.productionMultiplier, upgradeAmount);
-		return Mathf.RoundToInt(result);
+	public ResourceAmount GetProductionAmount(int upgradeAmount) {
+		var result = this.produce.amount * Mathf.Pow(this.productionMultiplier, upgradeAmount);
+		var newProduceResource = new ResourceAmount
+		{
+			resourceType = produce.resourceType, amount = Mathf.RoundToInt(result)
+		};
+		return newProduceResource;
 	}
 }

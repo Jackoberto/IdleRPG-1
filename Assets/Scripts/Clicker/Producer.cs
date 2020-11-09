@@ -13,8 +13,8 @@ public class Producer : MonoBehaviour {
 	public void SetUp(ProductionData productionData) {
 		this.productionData = productionData;
 		this.gameObject.name = productionData.name;
-		this.count.SetUp(productionData, productionData.costsResource, "Count");
-		this.upgrade.SetUp(productionData, productionData.costsResource, "Level");
+		this.count.SetUp(productionData, "Count");
+		this.upgrade.SetUp(productionData, "Level");
 	}
 
 	public void Purchase() => this.count.Purchase();
@@ -42,12 +42,12 @@ public class Producer : MonoBehaviour {
 	void ProduceResource() {
 		if (this.count.Amount == 0)
 			return;
-		productionData.producesResource.ResourceAmount += Mathf.RoundToInt(CalculateProductionAmount());
+		productionData.produce.resourceType.ResourceAmount += Mathf.RoundToInt(CalculateProductionAmount());
 		var instance = Instantiate(this.popupPrefab, this.transform);
-		instance.GetComponent<Text>().text = $"+{CalculateProductionAmount()} {productionData.producesResource.name}";
+		instance.GetComponent<Text>().text = $"+{CalculateProductionAmount()} {productionData.produce.resourceType.name}";
 	}
 
 	float CalculateProductionAmount() {
-		return this.productionData.GetProductionAmount(this.upgrade.Amount) * this.count.Amount;
+		return this.productionData.GetProductionAmount(this.upgrade.Amount).amount * this.count.Amount;
 	}
 }
