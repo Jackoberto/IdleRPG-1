@@ -5,9 +5,9 @@ namespace Clicker
 {
 	[CreateAssetMenu]
 	public class ProductionData : ScriptableObject {
-		public ResourceAmount costs;
+		[SerializeField] ResourceAmount costs;
 		[SerializeField] float costMultiplier = 1.1f;
-		public ResourceAmount produce;
+		[SerializeField] ResourceAmount produce;
 		public float productionTime = 1f;
 		[SerializeField] float productionMultiplier = 1.05f;
 

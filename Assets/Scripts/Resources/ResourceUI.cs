@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Resources
 {
-	public class UI : MonoBehaviour {
+	public class ResourceUI : MonoBehaviour {
 		public Text resourceAmountText;
 		public Resource resource;
 
