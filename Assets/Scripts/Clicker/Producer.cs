@@ -1,4 +1,5 @@
 ﻿using Common;
+using Resources;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -45,13 +46,17 @@ namespace Clicker
 		void ProduceResource() {
 			if (this.count.Amount == 0)
 				return;
-			this.productionData.GetProductionAmount(this.upgrade.Amount).resourceType.ResourceAmount += Mathf.RoundToInt(CalculateProductionAmount());
+			var productionAmount = CalculateProductionAmount();
+			productionAmount.resourceType.ResourceAmount += Mathf.RoundToInt(productionAmount.amount);
 			var instance = Instantiate(this.popupPrefab, this.transform);
-			instance.GetComponent<Text>().text = $"+{CalculateProductionAmount()} {this.productionData.GetProductionAmount(this.upgrade.Amount).resourceType.name}";
+			instance.GetComponent<Text>().text = $"+{productionAmount.amount} {productionAmount.resourceType.name}";
 		}
 
-		float CalculateProductionAmount() {
-			return this.productionData.GetProductionAmount(this.upgrade.Amount).amount * this.count.Amount;
+		ResourceAmount CalculateProductionAmount()
+		{
+			var result = this.productionData.GetProductionAmount(this.upgrade.Amount);
+			result.amount *= this.count.Amount;
+			return result;
 		}
 	}
 }
