@@ -46,17 +46,12 @@ namespace Clicker
 		void ProduceResource() {
 			if (this.count.Amount == 0)
 				return;
-			var productionAmount = CalculateProductionAmount();
+			var productionAmount = this.productionData.GetProductionAmount(this.upgrade.Amount, this.count.Amount);
+			print(productionAmount.amount + " calculated amount");
+			print(count.Amount);
 			productionAmount.resourceType.ResourceAmount += Mathf.RoundToInt(productionAmount.amount);
 			var instance = Instantiate(this.popupPrefab, this.transform);
-			instance.GetComponent<Text>().text = $"+{productionAmount.amount} {productionAmount.resourceType.name}";
-		}
-
-		ResourceAmount CalculateProductionAmount()
-		{
-			var result = this.productionData.GetProductionAmount(this.upgrade.Amount);
-			result.amount *= this.count.Amount;
-			return result;
+			instance.GetComponent<Text>().text = $"+{productionAmount}";
 		}
 	}
 }

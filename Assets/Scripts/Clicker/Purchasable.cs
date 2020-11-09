@@ -10,7 +10,14 @@ namespace Clicker
 		ProductionData productionData;
 		string productId;
 
-		bool IsAffordable => this.productionData.GetActualCosts(this.Amount).resourceType.ResourceAmount >= this.productionData.GetActualCosts(this.Amount).amount;
+		bool IsAffordable
+		{
+			get
+			{
+				var costAmount = this.productionData.GetActualCosts(this.Amount);
+				return costAmount.resourceType.ResourceAmount >= costAmount.amount;
+			}
+		}
 
 		public int Amount {
 			get => PlayerPrefs.GetInt(this.productionData.name+"_"+this.productId, 0);
@@ -20,18 +27,25 @@ namespace Clicker
 		public void SetUp(ProductionData productionData, string productId) {
 			this.productionData = productionData;
 			this.productId = productId;
-			this.buttonLabel.text = $"Add {productId} for {productionData.GetActualCosts(this.Amount).amount} {this.productionData.GetActualCosts(this.Amount).resourceType.name}";
+			UpdateCostLabel();
 		}
 
 		public void Purchase() {
 			if (!this.IsAffordable) 
 				return;
-			this.productionData.GetActualCosts(this.Amount).resourceType.ResourceAmount -= this.productionData.GetActualCosts(this.Amount).amount;
+			var costAmount = this.productionData.GetActualCosts(this.Amount);
+			costAmount.resourceType.ResourceAmount -= costAmount.amount;
 			this.Amount += 1;
-			this.buttonLabel.text = $"Add {this.productId} for {this.productionData.GetActualCosts(this.Amount).amount} {this.productionData.GetActualCosts(this.Amount).resourceType.name}";
+			UpdateCostLabel();
 		}
 
 		public void Update() => UpdateTextColor();
 		void UpdateTextColor() => this.buttonLabel.color = this.IsAffordable ? Color.black : Color.red;
+
+		void UpdateCostLabel()
+		{
+			var costAmount = this.productionData.GetActualCosts(this.Amount);
+			this.buttonLabel.text = $"Add {this.productId} for {costAmount}";
+		}
 	}
 }

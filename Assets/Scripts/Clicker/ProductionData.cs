@@ -15,8 +15,8 @@ namespace Clicker
 			return new ResourceAmount(this.costs.resourceType, Mathf.RoundToInt(this.costs.amount * Mathf.Pow(this.costMultiplier, amount)));
 		}
 	
-		public ResourceAmount GetProductionAmount(int upgradeAmount) {
-			return new ResourceAmount(this.produce.resourceType, Mathf.RoundToInt(this.produce.amount * Mathf.Pow(this.costMultiplier, upgradeAmount)));
+		public ResourceAmount GetProductionAmount(int upgradeAmount, int unitCount) {
+			return new ResourceAmount(this.produce.resourceType, Mathf.RoundToInt(this.produce.amount * Mathf.Pow(this.productionMultiplier, upgradeAmount) * unitCount));
 		}
 	}
 }
