@@ -34,7 +34,7 @@ namespace Clicker
 			if (!this.IsAffordable) 
 				return;
 			var costAmount = this.productionData.GetActualCosts(this.Amount);
-			costAmount.resourceType.ResourceAmount -= costAmount.amount;
+			costAmount.Subtract(costAmount.amount);
 			this.Amount += 1;
 			UpdateCostLabel();
 		}

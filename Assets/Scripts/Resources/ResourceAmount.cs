@@ -19,9 +19,16 @@ namespace Resources
             return $"{amount} {resourceType.name}";
         }
 
-        public bool IsAffordable => false;
+        public bool IsAffordable => this.resourceType.ResourceAmount >= this.amount;
 
-        public void Create(){}
-        public void Consume(){}
+        public void Subtract(int value)
+        {
+            this.resourceType.ResourceAmount -= value;
+        }
+
+        public void Add(int value)
+        {
+            this.resourceType.ResourceAmount += value;
+        }
     }
 }

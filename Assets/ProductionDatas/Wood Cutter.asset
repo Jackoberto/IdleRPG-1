@@ -18,6 +18,6 @@ MonoBehaviour:
   costMultiplier: 1.1
   produce:
     resourceType: {fileID: 11400000, guid: f566e07c3243e4382bc8c16ab032d9ce, type: 2}
-    amount: 3
+    amount: 1
   productionTime: 1
   productionMultiplier: 1.05
