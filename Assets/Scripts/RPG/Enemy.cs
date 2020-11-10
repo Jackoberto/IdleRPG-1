@@ -1,4 +1,3 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 public class Enemy : MonoBehaviour {
 }

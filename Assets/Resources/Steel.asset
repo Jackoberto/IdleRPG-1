@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bc466bb0a404d9a9fada5f4518eb5b, type: 3}
   m_Name: Steel
   m_EditorClassIdentifier: 
-  goldAmountPerClick: 5
-  goldPlayerPrefKey: Steel
+  color: {r: 0.6132076, g: 0.5756052, b: 0.5756052, a: 1}
+  resourceAmountPerClick: 5
