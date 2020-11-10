@@ -10,14 +10,7 @@ namespace Clicker
 		ProductionData productionData;
 		string productId;
 
-		bool IsAffordable
-		{
-			get
-			{
-				var costAmount = this.productionData.GetActualCosts(this.Amount);
-				return costAmount.resourceType.ResourceAmount >= costAmount.amount;
-			}
-		}
+		private bool IsAffordable => productionData.GetActualCosts(this.Amount).IsAffordable;
 
 		public int Amount {
 			get => PlayerPrefs.GetInt(this.productionData.name+"_"+this.productId, 0);
@@ -33,8 +26,7 @@ namespace Clicker
 		public void Purchase() {
 			if (!this.IsAffordable) 
 				return;
-			var costAmount = this.productionData.GetActualCosts(this.Amount);
-			costAmount.Subtract(costAmount.amount);
+			this.productionData.GetActualCosts(this.Amount).Subtract();
 			this.Amount += 1;
 			UpdateCostLabel();
 		}

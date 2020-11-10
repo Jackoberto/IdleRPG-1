@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 55.66}
+  m_SizeDelta: {x: 300, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4310924990199828131
 MonoBehaviour:
@@ -73,10 +73,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productionData: {fileID: 0}
-  goldAmountText: {fileID: 5180716212640738329}
+  titleText: {fileID: 5180716212640738329}
   popupPrefab: {fileID: 7931557911440886001, guid: 4a2c1f99b5e8342469ea5b1efbf4b803,
     type: 3}
-  amount:
+  count:
     buttonLabel: {fileID: 5180716212195582697}
   upgrade:
     buttonLabel: {fileID: 5485803915242519513}

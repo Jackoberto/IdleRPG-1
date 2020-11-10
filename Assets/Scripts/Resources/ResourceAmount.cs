@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿using UnityEngine;
 
 namespace Resources
 {
@@ -8,12 +8,6 @@ namespace Resources
         public Resource resourceType;
         public int amount;
 
-        public ResourceAmount(Resource resourceType, int amount)
-        {
-            this.resourceType = resourceType;
-            this.amount = amount;
-        }
-
         public override string ToString()
         {
             return $"{amount} {resourceType.name}";
@@ -21,14 +15,14 @@ namespace Resources
 
         public bool IsAffordable => this.resourceType.ResourceAmount >= this.amount;
 
-        public void Subtract(int value)
+        public void Subtract()
         {
-            this.resourceType.ResourceAmount -= value;
+            this.resourceType.ResourceAmount -= this.amount;
         }
 
-        public void Add(int value)
+        public void Add()
         {
-            this.resourceType.ResourceAmount += value;
+            this.resourceType.ResourceAmount += this.amount;
         }
     }
 }

@@ -7,6 +7,11 @@ namespace Resources
 		public Text resourceAmountText;
 		public Resource resource;
 
+		public void SetUp(Resource resource)
+		{
+			this.resource = resource;
+		}
+
 		void UpdateResourceAmountLabel()
 		{
 			this.resourceAmountText.text = resource.ResourceAmount.ToString($"0 {resource.name}");

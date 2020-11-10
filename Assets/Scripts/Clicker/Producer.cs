@@ -8,7 +8,7 @@ namespace Clicker
 {
 	public class Producer : MonoBehaviour {
 		public ProductionData productionData;
-		[FormerlySerializedAs("goldAmountText")] public Text resourceAmountText;
+		[FormerlySerializedAs("goldAmountText")][FormerlySerializedAs("resourceAmountText")] public Text titleText;
 		public ProductionPopUp popupPrefab;
 		[FormerlySerializedAs("amount")] public Purchasable count;
 		public Purchasable upgrade;
@@ -40,14 +40,19 @@ namespace Clicker
 		}
 
 		void UpdateTitleLabel() {
-			this.resourceAmountText.text = $"{this.count.Amount}x {this.productionData.name} Level {this.upgrade.Amount}";
+			this.titleText.text = this.ToString();
+		}
+
+		public override string ToString()
+		{
+			return $"{this.count.Amount}x {this.productionData.name} Level {this.upgrade.Amount}";
 		}
 
 		void ProduceResource() {
 			if (this.count.Amount == 0)
 				return;
 			var productionAmount = this.productionData.GetProductionAmount(this.upgrade.Amount, this.count.Amount);
-			productionAmount.Add(Mathf.RoundToInt(productionAmount.amount));
+			productionAmount.Add();
 			var instance = Instantiate(this.popupPrefab, this.transform);
 			instance.GetComponent<Text>().text = $"+{productionAmount}";
 		}

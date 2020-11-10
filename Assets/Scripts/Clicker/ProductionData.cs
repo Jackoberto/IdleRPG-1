@@ -12,11 +12,15 @@ namespace Clicker
 		[SerializeField] float productionMultiplier = 1.05f;
 
 		public ResourceAmount GetActualCosts(int amount) {
-			return new ResourceAmount(this.costs.resourceType, Mathf.RoundToInt(this.costs.amount * Mathf.Pow(this.costMultiplier, amount)));
+			var result = costs;
+			result.amount = Mathf.RoundToInt(this.costs.amount * Mathf.Pow(this.costMultiplier, amount));
+			return result;
 		}
 	
 		public ResourceAmount GetProductionAmount(int upgradeAmount, int unitCount) {
-			return new ResourceAmount(this.produce.resourceType, Mathf.RoundToInt(this.produce.amount * Mathf.Pow(this.productionMultiplier, upgradeAmount) * unitCount));
+			var result = produce;
+			result.amount = Mathf.RoundToInt(result.amount * Mathf.Pow(this.productionMultiplier, upgradeAmount) * unitCount);
+			return result;
 		}
 	}
 }
