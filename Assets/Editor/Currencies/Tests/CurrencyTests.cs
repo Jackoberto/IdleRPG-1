@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using UnityEngine;
 
 namespace Currencies.Tests
 {
@@ -11,6 +12,20 @@ namespace Currencies.Tests
             Assert.AreEqual(new Dollar(10), five.Times(2));
             Assert.AreEqual(new Dollar(15), five.Times(3));
         }
+
+        [Test]
+        public void InstanceDoesntChangeAfterMultiply()
+        {
+            var five = new Dollar(5);
+            five.Times(3);
+            Assert.AreEqual(new Dollar(5), five);
+        }
+        
+        [Test]
+        public void CantConvertDollarToSEK()
+        {
+            Assert.AreNotEqual(new SEK(5), new Dollar(5));
+        }
         
         [Test]
         public void ToStringFormat()
@@ -22,8 +37,21 @@ namespace Currencies.Tests
         public void MultiplySEK()
         {
             var five = new SEK(5);
+            Debug.Log(five.Times(2));
             Assert.AreEqual(new SEK(10), five.Times(2));
             Assert.AreEqual(new SEK(15), five.Times(3));
+        }
+        
+        [Test]
+        public void InheritedEqualsWorksAsIntended()
+        {
+            Assert.AreEqual(new SEK(10), new SEK(10));
+        }
+        
+        [Test]
+        public void InheritedOverloadedEqualsOperatorWorksAsIntended()
+        {
+            Assert.True(new Dollar(10) != new SEK(10));
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
