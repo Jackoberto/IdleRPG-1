@@ -4,13 +4,14 @@ using UnityEngine.Serialization;
 namespace Resources
 {
 	[CreateAssetMenu]
-	public class Resource : ScriptableObject {
+	public class Resource : ScriptableObject
+	{
+		public Color color;
 		[FormerlySerializedAs("goldAmountPerClick")] public int resourceAmountPerClick = 5;
-		[FormerlySerializedAs("goldPlayerPrefKey")] [SerializeField] private string resourcePlayerPrefKey = "Gold";
 
 		public int ResourceAmount {
-			get => PlayerPrefs.GetInt(resourcePlayerPrefKey, 1);
-			set => PlayerPrefs.SetInt(resourcePlayerPrefKey, value);
+			get => PlayerPrefs.GetInt(this.name, 1);
+			set => PlayerPrefs.SetInt(this.name, value);
 		}
 
 		public void ProduceResource() {

@@ -10,6 +10,7 @@ namespace Resources
 		public void SetUp(Resource resource)
 		{
 			this.resource = resource;
+			resourceAmountText.color = resource.color;
 		}
 
 		void UpdateResourceAmountLabel()
