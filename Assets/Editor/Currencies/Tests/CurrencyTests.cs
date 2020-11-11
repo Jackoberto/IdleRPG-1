@@ -8,57 +8,56 @@ namespace Currencies.Tests
         [Test]
         public void MultiplyDollar()
         {
-            var five = new Dollar(5);
-            Assert.AreEqual(new Dollar(10), five.Times(2));
-            Assert.AreEqual(new Dollar(15), five.Times(3));
+            var five = Currency.Dollar(5);
+            Assert.AreEqual(Currency.Dollar(10), five.Times(2));
+            Assert.AreEqual(Currency.Dollar(15), five.Times(3));
         }
 
         [Test]
         public void InstanceDoesntChangeAfterMultiply()
         {
-            var five = new Dollar(5);
+            var five = Currency.Dollar(5);
             five.Times(3);
-            Assert.AreEqual(new Dollar(5), five);
+            Assert.AreEqual(Currency.Dollar(5), five);
         }
         
         [Test]
-        public void CantConvertDollarToSEK()
+        public void CantImplictlyConvertDollarToSEK()
         {
-            Assert.AreNotEqual(new SEK(5), new Dollar(5));
+            Assert.AreNotEqual(Currency.SEK(5), Currency.Dollar(5));
         }
         
         [Test]
         public void ToStringFormat()
         {
-            Assert.AreEqual("5 Dollar", new Dollar(5).ToString());
+            Assert.AreEqual("5 Dollar", Currency.Dollar(5).ToString());
         }
 
         [Test]
         public void MultiplySEK()
         {
-            var five = new SEK(5);
-            Assert.AreEqual(new SEK(10), five.Times(2));
-            Assert.AreEqual(new SEK(15), five.Times(3));
+            var five = Currency.SEK(5);
+            Assert.AreEqual(Currency.SEK(10), five.Times(2));
+            Assert.AreEqual(Currency.SEK(15), five.Times(3));
         }
         
         [Test]
         public void InheritedEqualsWorksAsIntended()
         {
-            Assert.AreEqual(new SEK(10), new SEK(10));
+            Assert.AreEqual(Currency.SEK(10), Currency.SEK(10));
         }
         
         [Test]
         public void InheritedOverloadedEqualsOperatorWorksAsIntended()
         {
-            Assert.True(new Dollar(10) != new SEK(10));
+            Assert.True(Currency.Dollar(10) != Currency.SEK(10));
         }
 
         [Test]
         public void MultiplyDoesntChangeType()
         {
-            var product1 = new SEK(5).Times(2);
-            var product2 = new Dollar(5).Times(2);
-            Debug.Log($"{product1} {product2}");
+            var product1 = Currency.SEK(5).Times(2);
+            var product2 = Currency.Dollar(5).Times(2);
             Assert.AreNotEqual(product1, product2);
         }
 
