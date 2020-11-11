@@ -37,7 +37,6 @@ namespace Currencies.Tests
         public void MultiplySEK()
         {
             var five = new SEK(5);
-            Debug.Log(five.Times(2));
             Assert.AreEqual(new SEK(10), five.Times(2));
             Assert.AreEqual(new SEK(15), five.Times(3));
         }
@@ -52,6 +51,15 @@ namespace Currencies.Tests
         public void InheritedOverloadedEqualsOperatorWorksAsIntended()
         {
             Assert.True(new Dollar(10) != new SEK(10));
+        }
+
+        [Test]
+        public void MultiplyDoesntChangeType()
+        {
+            var product1 = new SEK(5).Times(2);
+            var product2 = new Dollar(5).Times(2);
+            Debug.Log($"{product1} {product2}");
+            Assert.AreNotEqual(product1, product2);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
