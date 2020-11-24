@@ -7,6 +7,7 @@ namespace Clicker
 	[Serializable]
 	public class Purchasable {
 		public Text buttonLabel;
+		public event Action OnPurchase;
 		ProductionData productionData;
 		string productId;
 
@@ -14,13 +15,20 @@ namespace Clicker
 
 		public int Amount {
 			get => PlayerPrefs.GetInt(this.productionData.name+"_"+this.productId, 0);
-			private set => PlayerPrefs.SetInt(this.productionData.name+"_"+this.productId, value);
+			private set
+			{
+				PlayerPrefs.SetInt(this.productionData.name + "_" + this.productId, value); 
+				OnPurchase?.Invoke();
+			}
 		}
 
 		public void SetUp(ProductionData productionData, string productId) {
 			this.productionData = productionData;
 			this.productId = productId;
-			UpdateCostLabel();
+			productionData.SubscribeMeToCosts(UpdateTextColor);
+			OnPurchase += UpdateCostLabel;
+			OnPurchase?.Invoke();
+			UpdateTextColor();
 		}
 
 		public void Purchase() {
@@ -28,10 +36,7 @@ namespace Clicker
 				return;
 			this.productionData.GetActualCosts(this.Amount).Subtract();
 			this.Amount += 1;
-			UpdateCostLabel();
 		}
-
-		public void Update() => UpdateTextColor();
 		void UpdateTextColor() => this.buttonLabel.color = this.IsAffordable ? Color.black : Color.red;
 
 		void UpdateCostLabel()

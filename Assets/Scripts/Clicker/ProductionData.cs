@@ -1,3 +1,4 @@
+using System;
 using Resources;
 using UnityEngine;
 
@@ -5,11 +6,16 @@ namespace Clicker
 {
 	[CreateAssetMenu]
 	public class ProductionData : ScriptableObject {
-		[SerializeField] ResourceAmount costs;
+		[SerializeField] public ResourceAmount costs;
 		[SerializeField] float costMultiplier = 1.1f;
-		[SerializeField] ResourceAmount produce;
+		[SerializeField] private ResourceAmount produce;
 		public float productionTime = 1f;
 		[SerializeField] float productionMultiplier = 1.05f;
+
+		public void SubscribeMeToCosts(Action method)
+		{
+			costs.resourceType.OnResourceChange += method;
+		}
 
 		public ResourceAmount GetActualCosts(int amount) {
 			var result = costs;

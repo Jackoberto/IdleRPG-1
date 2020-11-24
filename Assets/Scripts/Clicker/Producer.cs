@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System;
+using Common;
 using Resources;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,6 +20,9 @@ namespace Clicker
 			this.gameObject.name = productionData.name;
 			this.count.SetUp(productionData, "Count");
 			this.upgrade.SetUp(productionData, "Level");
+			UpdateTitleLabel();
+			this.count.OnPurchase += UpdateTitleLabel;
+			this.upgrade.OnPurchase += UpdateTitleLabel;
 		}
 
 		public void Purchase() => this.count.Purchase();
@@ -26,9 +30,6 @@ namespace Clicker
 
 		void Update() {
 			UpdateProduction();
-			UpdateTitleLabel();
-			this.count.Update();
-			this.upgrade.Update();
 		}
 
 		void UpdateProduction() {

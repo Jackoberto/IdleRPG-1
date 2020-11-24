@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Resources
+﻿namespace Resources
 {
     [System.Serializable]
     public struct ResourceAmount
