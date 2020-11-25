@@ -24,14 +24,8 @@ namespace Currencies
 
         public override int GetHashCode() => amount;
 
-        public static Dollar Dollar(int amount)
-        {
-            return new Dollar(amount);
-        }
+        public static Dollar Dollar(int amount) => new Dollar(amount);
 
-        public static SEK SEK(int amount)
-        {
-            return new SEK(amount);
-        }
+        public static SEK SEK(int amount) => new SEK(amount);
     }
 }
