@@ -28,9 +28,7 @@ namespace Clicker
 		public void Purchase() => this.count.Purchase();
 		public void Upgrade() => this.upgrade.Purchase();
 
-		void Update() {
-			UpdateProduction();
-		}
+		void Update() => UpdateProduction();
 
 		void UpdateProduction() {
 			this.elapsedTime += Time.deltaTime;

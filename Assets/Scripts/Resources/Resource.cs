@@ -22,13 +22,8 @@ namespace Resources
 			}
 		}
 
-		public void ProduceResource() {
-			this.ResourceAmount += this.resourceAmountPerClick; // this.resourceAmount = this.resourceAmount + this.resourceAmountPerClick;
-		}
+		public void ProduceResource() => this.ResourceAmount += this.resourceAmountPerClick; // this.resourceAmount = this.resourceAmount + this.resourceAmountPerClick;
 
-		public override string ToString()
-		{
-			return ResourceAmount.ToString($"0 {this.name}");
-		}
+		public override string ToString() => ResourceAmount.ToString($"0 {this.name}");
 	}
 }

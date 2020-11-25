@@ -12,11 +12,8 @@ namespace Clicker
 		public float productionTime = 1f;
 		[SerializeField] float productionMultiplier = 1.05f;
 
-		public void SubscribeMeToCosts(Action method)
-		{
-			costs.resourceType.OnResourceChange += method;
-		}
-
+		public void SubscribeMeToCosts(Action method) => costs.resourceType.OnResourceChange += method;
+		
 		public ResourceAmount GetActualCosts(int amount) {
 			var result = costs;
 			result.amount = Mathf.RoundToInt(this.costs.amount * Mathf.Pow(this.costMultiplier, amount));
