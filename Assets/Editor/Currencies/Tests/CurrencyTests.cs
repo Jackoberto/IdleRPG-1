@@ -20,13 +20,7 @@ namespace Currencies.Tests
             five.Times(3);
             Assert.AreEqual(Currency.Dollar(5), five);
         }
-        
-        [Test]
-        public void CantImplictlyConvertDollarToSEK()
-        {
-            Assert.AreNotEqual(Currency.SEK(5), Currency.Dollar(5));
-        }
-        
+
         [Test]
         public void ToStringFormat()
         {
@@ -59,6 +53,44 @@ namespace Currencies.Tests
             var product1 = Currency.SEK(5).Times(2);
             var product2 = Currency.Dollar(5).Times(2);
             Assert.AreNotEqual(product1, product2);
+        }
+
+        [Test]
+        public void DollarCanBeConvertedToSEKExplicitly()
+        {
+            var amount = Currency.Dollar(10);
+            var result = Currency.ConvertTo<SEK>(amount);
+            Assert.AreEqual(Currency.SEK(100), result);
+        }
+        
+        [Test]
+        public void SEKCanBeConvertedToDollarExplicitly()
+        {
+            var amount = Currency.SEK(100);
+            var result = Currency.ConvertTo<Dollar>(amount);
+            Assert.AreEqual(Currency.Dollar(10), result);
+        }
+        [Test]
+        public void SEKCanBeConvertedToDollarImplicitly()
+        {
+            var amount = Currency.SEK(100);
+            Assert.AreEqual(Currency.Dollar(10), amount);
+        }
+        
+        [Test]
+        public void DollarCanBeConvertedToSEKImplicitly()
+        {
+            var amount = Currency.Dollar(10);
+            Assert.True(Currency.SEK(100) == amount);
+        }
+
+        [Test]
+        public void DollarCanBeAddedToSEKExplicitly()
+        {
+            var amount = Currency.SEK(30);
+            var result = amount.Add(Currency.Dollar(2));
+            Debug.Log(result);
+            Assert.True(result.GetHashCode() == 50);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
