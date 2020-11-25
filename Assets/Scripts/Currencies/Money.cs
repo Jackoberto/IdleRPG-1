@@ -6,9 +6,9 @@ namespace Currencies
 {
     public readonly struct Money
     {
-        public static bool operator ==(Money left, Money right) => Equals(left, right);
+        public static bool operator ==(Money left, Money right) => left.Equals(right);
         
-        public static bool operator !=(Money left, Money right) => !Equals(left, right);
+        public static bool operator !=(Money left, Money right) => !left.Equals(right);
         
         public static Money operator +(Money left, Money right) => left.Add(right);
         
@@ -21,7 +21,6 @@ namespace Currencies
         public static bool operator <(Money left, Money right) => !left.IsGreaterThan(right);
 
         public static bool operator >(Money left, Money right) => left.IsGreaterThan(right);
-
 
         private readonly int amount;
 
@@ -74,10 +73,7 @@ namespace Currencies
             }
         }
         
-        public static void Convert(ref Money money, Currencies convertTo)
-        {
-            money = Convert(money, convertTo);
-        }
+        public static void Convert(ref Money money, Currencies convertTo) => money = Convert(money, convertTo);
 
         public Money Multiply(int factor) => GenericCurrency(Mathf.RoundToInt(factor * this.amount), currency);
         
@@ -115,8 +111,16 @@ namespace Currencies
             }
             return money.amount == amount;
         }
+        
+        public bool Equals(Money money)
+        {
+            if (money.currency != currency) {
+                return Convert(money, currency).amount == amount;
+            }
+            return money.amount == amount;
+        }
 
-        public override int GetHashCode() => amount;
+        public override int GetHashCode() => Mathf.RoundToInt(amount * exchangeRate);
         
         public override string ToString() => $"{this.amount} {currency}";
     }

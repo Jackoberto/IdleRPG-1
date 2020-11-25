@@ -157,12 +157,20 @@ namespace Currencies.Tests
             var amount = Money.Dollar(20);
             Money.Convert(ref amount,Currencies.SEK);
             Debug.Log(amount);
-            Assert.IsTrue(amount.GetHashCode() == 200);
+            Assert.IsTrue(amount == Money.SEK(200));
+        }
+        
+        [Test]
+        public void MoneyEqualsMethod()
+        {
+            var amount = Money.Dollar(20);
+            var equal = amount.Equals(Money.Dollar(20));
+            Assert.IsTrue(equal);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.
-       /* [UnityTest]
+        /*[UnityTest]
         public IEnumerator CurrencyTestsWithEnumeratorPasses()
         {
             // Use the Assert class to test conditions.
