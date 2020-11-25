@@ -59,7 +59,7 @@ namespace Currencies.Tests
         public void DollarCanBeConvertedToSEKExplicitly()
         {
             var amount = Currency.Dollar(10);
-            var result = Currency.ConvertTo<SEK>(amount);
+            var result = Currency.Convert(amount, Currencies.SEK);
             Assert.AreEqual(Currency.SEK(100), result);
         }
         
@@ -67,7 +67,7 @@ namespace Currencies.Tests
         public void SEKCanBeConvertedToDollarExplicitly()
         {
             var amount = Currency.SEK(100);
-            var result = Currency.ConvertTo<Dollar>(amount);
+            var result = Currency.Convert(amount, Currencies.Dollar);
             Assert.AreEqual(Currency.Dollar(10), result);
         }
         [Test]
@@ -91,6 +91,15 @@ namespace Currencies.Tests
             var result = amount.Add(Currency.Dollar(2));
             Debug.Log(result);
             Assert.True(result.GetHashCode() == 50);
+        }
+        
+        [Test]
+        public void DollarCanBeAddedToSEKImplicitly()
+        {
+            var amount = Currency.SEK(30) + Currency.Dollar(2);
+            var result = Currency.Convert(amount, Currencies.Euro);
+            Debug.Log(result);
+            Assert.True(result.GetHashCode() == 2);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

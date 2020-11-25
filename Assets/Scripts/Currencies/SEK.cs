@@ -1,4 +1,4 @@
-namespace Currencies
+/*namespace Currencies
 {
     public class SEK : Currency
     {
@@ -42,4 +42,4 @@ namespace Currencies
             return sek.amount == this.amount;
         }
     }
-}
+}*/

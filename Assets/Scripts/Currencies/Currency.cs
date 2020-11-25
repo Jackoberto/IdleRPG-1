@@ -1,46 +1,116 @@
+using System;
 using UnityEngine;
 
 namespace Currencies
 {
-    public abstract class Currency
+    public class Currency
     {
         public static bool operator ==(Currency left, Currency right) => Equals(left, right);
         
         public static bool operator !=(Currency left, Currency right) => !Equals(left, right);
-
-        internal readonly int amount;
-
-        protected float exchangeRate;
         
-        protected Currency(int amount) => this.amount = amount;
-        protected Currency(){}
+        public static Currency operator +(Currency left, Currency right) => left.Add(right);
+        public static Currency operator -(Currency left, Currency right) => left.Add(right);
 
-        public abstract Currency Times(int factor);
-        public abstract Currency Add(int value);
+        private readonly int amount;
 
-        public abstract Currency Add(Currency currency);
+        private readonly Currencies type;
 
-        public override string ToString() => $"{this.amount} {GetType().Name}";
+        private readonly float exchangeRate;
 
-        public static Currency ConvertTo<T>(Currency convertFrom) where T : Currency, new()
+        private static float EuroExchangeRate = 2.0f;
+
+        private static float DollarExchangeRate = 1.0f;
+
+        private static float SEKExchangeRate = 0.1f;
+
+        private Currency(int amount, Currencies type, float exchangeRate)
+        { 
+            this.amount = amount;
+            this.type = type;
+            this.exchangeRate = exchangeRate;
+        }
+
+        private Currency(){}
+
+        public Currency Times(int factor) => GenericCurrency(Mathf.RoundToInt(factor * this.amount), type);
+
+        public Currency Add(Currency currency)
         {
-            var currency = new T();
-            var result= currency.Add(Mathf.RoundToInt(convertFrom.exchangeRate / currency.exchangeRate * convertFrom.amount));
-            return result;
+            Currency newCurrency = new Currency();
+            if (this.type != currency.type)
+            {
+                newCurrency = Convert(currency, this.type);
+            }
+
+            newCurrency = GenericCurrency(newCurrency.amount + this.amount, type);
+
+            return newCurrency;
+        }
+
+        public override string ToString() => $"{this.amount} {type}";
+
+        public static Currency Convert(Currency convertFrom, Currencies convertTo)
+        {
+            switch (convertTo)
+            {
+                case Currencies.Dollar:
+                {
+                    return Dollar(Mathf.RoundToInt(convertFrom.exchangeRate / DollarExchangeRate * convertFrom.amount));
+                }
+                case Currencies.SEK:
+                {
+                    return SEK(Mathf.RoundToInt(convertFrom.exchangeRate / SEKExchangeRate * convertFrom.amount));
+                }
+                case Currencies.Euro:
+                {
+                    return Euro(Mathf.RoundToInt(convertFrom.exchangeRate / EuroExchangeRate * convertFrom.amount));  
+                }
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
+            }
         }
 
         public override bool Equals(object obj)
         {
             if (obj?.GetType() != this.GetType())
                 return false;
-            var currency = obj as Currency; 
-            return currency?.GetHashCode() == this.GetHashCode();
+            if (obj is Currency currency && currency.type != this.type)
+            {
+                obj = Convert(currency, type);
+            }
+            var result = obj as Currency; 
+            return result?.GetHashCode() == this.GetHashCode();
         }
 
         public override int GetHashCode() => amount;
 
-        public static Dollar Dollar(int amount) => new Dollar(amount);
+        private static Currency GenericCurrency(int amount, Currencies type)
+        {
+            switch (type)
+            {
+                case Currencies.Dollar:
+                    return Dollar(amount);
+                case Currencies.SEK:
+                    return SEK(amount);
+                case Currencies.Euro:
+                    return Euro(amount);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
 
-        public static SEK SEK(int amount) => new SEK(amount);
+        public static Currency Dollar(int amount) => new Currency(amount, Currencies.Dollar, DollarExchangeRate);
+
+        public static Currency SEK(int amount) => new Currency(amount, Currencies.SEK, SEKExchangeRate);
+        
+        public static Currency Euro(int amount) => new Currency(amount, Currencies.Euro, EuroExchangeRate);
+    }
+
+    public enum Currencies : int
+    {
+        Dollar = 0,
+        SEK = 1,
+        Euro = 2
     }
 }

@@ -1,4 +1,4 @@
-namespace Currencies
+/*namespace Currencies
 {
     public class Dollar : Currency
     {
@@ -41,4 +41,4 @@ namespace Currencies
             return dollar.amount == this.amount;
         }
     }
-}
+}*/
