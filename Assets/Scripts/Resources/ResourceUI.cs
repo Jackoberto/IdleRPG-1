@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Resources
 {
 	public class ResourceUI : MonoBehaviour
 	{
-		public Text resourceAmountText;
+		public UnityEvent<string> resourceAmountChange;
+		public UnityEvent<Color> resourceColorChange;
 
 		public void SetUp(Resource resource)
 		{
-			resource.OnResourceChangeText += s => this.resourceAmountText.text = s;
-			resourceAmountText.color = resource.color;
-			this.resourceAmountText.text = resource.ToString();
+			resource.OnResourceChangeText += s => resourceAmountChange.Invoke(s);
+			resourceColorChange.Invoke(resource.color);
+			resourceAmountChange.Invoke(resource.ToString());
 		}
 	}
 }

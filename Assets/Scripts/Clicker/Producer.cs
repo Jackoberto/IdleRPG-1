@@ -2,6 +2,7 @@
 using Common;
 using Resources;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ namespace Clicker
 {
 	public class Producer : MonoBehaviour {
 		public ProductionData productionData;
-		[FormerlySerializedAs("goldAmountText")][FormerlySerializedAs("resourceAmountText")] public Text titleText;
+		public UnityEvent<string> titleLabelChanged;
 		public ProductionPopUp popupPrefab;
 		[FormerlySerializedAs("amount")] public Purchasable count;
 		public Purchasable upgrade;
@@ -38,9 +39,8 @@ namespace Clicker
 			}
 		}
 
-		void UpdateTitleLabel() {
-			this.titleText.text = this.ToString();
-		}
+		void UpdateTitleLabel() => titleLabelChanged.Invoke(this.ToString());
+		
 
 		public override string ToString()
 		{
