@@ -12,7 +12,11 @@ namespace Currencies
         
         public static Money operator +(Money left, Money right) => left.Add(right);
         
+        public static Money operator +(Money left, float right) => left.Add(right);
+        
         public static Money operator -(Money left, Money right) => left.Subtract(right);
+        
+        public static Money operator -(Money left, float right) => left.Subtract(right);
 
         public static Money operator *(Money left, float right) => left.Multiply(right);
         
@@ -34,7 +38,7 @@ namespace Currencies
             this.currency = currency;
         }
         
-        private static Money GenericCurrency(float amount, Currencies type)
+        private static Money Convert(float amount, Currencies type)
         {
             switch (type)
             {
@@ -72,16 +76,21 @@ namespace Currencies
         
         public static void Convert(ref Money money, Currencies convertTo) => money = Convert(money, convertTo);
 
-        public Money Multiply(float factor) => GenericCurrency(factor * this.amount, currency);
+        public Money Multiply(float factor) => Convert(factor * this.amount, currency);
         
-        public Money Divide(float denominator) => GenericCurrency(this.amount / denominator, currency);
+        public Money Divide(float denominator) => Convert(this.amount / denominator, currency);
 
         public Money Add(Money money)
         {
             if (this.currency != money.currency) {
                 money = Convert(money, this.currency);
             }
-            return GenericCurrency(money.amount + this.amount, currency);
+            return Convert(this.amount + money.amount, currency);
+        }
+        
+        public Money Add(float money)
+        {
+            return Convert(this.amount + money, currency);
         }
         
         public Money Subtract(Money money)
@@ -89,7 +98,12 @@ namespace Currencies
             if (this.currency != money.currency) {
                 money = Convert(money, this.currency);
             }
-            return GenericCurrency(this.amount - money.amount, currency);
+            return Convert(this.amount - money.amount, currency);
+        }
+        
+        public Money Subtract(float money)
+        {
+            return Convert(this.amount - money, currency);
         }
         
         private bool IsGreaterThan(Money money)

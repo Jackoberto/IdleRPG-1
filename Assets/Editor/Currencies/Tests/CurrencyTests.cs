@@ -3,9 +3,7 @@ using UnityEngine;
 
 namespace Currencies.Tests
 {
-    #region BasicTests
-
-    public class BasicTests
+    public class GeneralTests
     {
         [Test]
         public void InstanceDoesntChangeAfterMultiply()
@@ -41,76 +39,76 @@ namespace Currencies.Tests
             Assert.AreNotEqual(product1, product2);
         }
     }
-
-    #endregion
-
-    #region Convert
-
-    public class Convert
+    
+    namespace Conversion
     {
-        [Test]
-        public void InstanceConvertWorks()
+        public class Convert
         {
-            var amount = Money.Dollar(20);
-            Money.Convert(ref amount, Currencies.SEK);
-            Debug.Log(amount);
-            Assert.IsTrue(amount ==
-                          Money.SEK(Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] * 20));
+            [Test]
+            public void InstanceConvertWorks()
+            {
+                var amount = Money.Dollar(20);
+                Money.Convert(ref amount, Currencies.SEK);
+                Debug.Log(amount);
+                Assert.IsTrue(amount ==
+                              Money.SEK(Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] *
+                                        20));
+            }
+
+            [Test]
+            public void SekCanBeConvertedToDollarThenBack()
+            {
+                var amount = Money.SEK(83.33f);
+                var result = Money.Convert(amount, Currencies.Dollar);
+                var result2 = Money.Convert(result, Currencies.SEK);
+                Assert.AreEqual(amount, result2);
+            }
+
+            [Test]
+            public void DollarCanBeConvertedToSekExplicitly()
+            {
+                var amount = Money.Dollar(10);
+                var result = Money.Convert(amount, Currencies.SEK);
+                Assert.AreEqual(Money.SEK(83.33f), result);
+            }
+
+            [Test]
+            public void DollarCanBeConvertedToSekImplicitly()
+            {
+                var amount = Money.Dollar(10);
+                Debug.Log(Money.Convert(amount, Currencies.SEK));
+                Assert.True(
+                    Money.SEK(Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] * 10) ==
+                    amount);
+            }
         }
 
-        [Test]
-        public void SekCanBeConvertedToDollarThenBack()
+        public class Addition
         {
-            var amount = Money.SEK(83.33f);
-            var result = Money.Convert(amount, Currencies.Dollar);
-            var result2 = Money.Convert(result, Currencies.SEK);
-            Assert.AreEqual(amount, result2);
-        }
+            [Test]
+            public void DollarCanBeAddedToSekExplicitly()
+            {
+                var amount = Money.SEK(30);
+                var result = amount.Add(Money.Dollar(2));
+                Debug.Log(result);
+                Assert.True(result ==
+                            Money.SEK(30 + Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] *
+                                2));
+            }
 
-        [Test]
-        public void DollarCanBeConvertedToSekExplicitly()
-        {
-            var amount = Money.Dollar(10);
-            var result = Money.Convert(amount, Currencies.SEK);
-            Assert.AreEqual(Money.SEK(83.33f), result);
-        }
-
-        [Test]
-        public void DollarCanBeConvertedToSekImplicitly()
-        {
-            var amount = Money.Dollar(10);
-            Debug.Log(Money.Convert(amount, Currencies.SEK));
-            Assert.True(Money.SEK(Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] * 10) ==
-                        amount);
-        }
-
-        [Test]
-        public void DollarCanBeAddedToSekExplicitly()
-        {
-            var amount = Money.SEK(30);
-            var result = amount.Add(Money.Dollar(2));
-            Debug.Log(result);
-            Assert.True(result ==
-                        Money.SEK(30 + Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] *
-                            2));
-        }
-
-        [Test]
-        public void DollarCanBeAddedToSekImplicitly()
-        {
-            var amount = Money.SEK(30) + Money.Dollar(2);
-            Debug.Log(amount);
-            Assert.True(amount ==
-                        Money.SEK(30 + Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] *
-                            2));
+            [Test]
+            public void DollarCanBeAddedToSekImplicitly()
+            {
+                var amount = Money.SEK(30) + Money.Dollar(2);
+                Debug.Log(amount);
+                Assert.True(amount ==
+                            Money.SEK(30 + Money.ExchangeRates[Currencies.Dollar] / Money.ExchangeRates[Currencies.SEK] *
+                                2));
+            }
         }
     }
 
-    #endregion
-
-    #region MathOperators
-
-    public class MathOperatorsWithSameCurrency
+    public class MathOperators
     {
         [Test]
         public void MultiplyMethod()
@@ -154,56 +152,56 @@ namespace Currencies.Tests
             Assert.True(amount == Money.Dollar(5));
         }
     }
-
-    #endregion
-
-    #region ComparisonOperators
-
-    public class ComparisonOperators
+    
+    namespace ComparisonOperators
     {
-        [Test]
-        public void IsLessThanOperator()
+        public class GreaterThan
         {
-            var amount = Money.Dollar(16);
-            var result = amount < Money.Dollar(17);
-            Assert.IsTrue(result);
+            [Test]
+            public void IsLessThanOperator()
+            {
+                var amount = Money.Dollar(16);
+                var result = amount < Money.Dollar(17);
+                Assert.IsTrue(result);
+            }
+
+            [Test]
+            public void IsLessThanWithDifferentCurrencies()
+            {
+                var amount = Money.Dollar(16);
+                var result = amount < Money.Euro(16);
+                Assert.IsTrue(result);
+            }
+
+            [Test]
+            public void IsGreaterThanOperator()
+            {
+                var amount = Money.Dollar(20);
+                var result = amount > Money.Dollar(16);
+                Assert.IsTrue(result);
+            }
         }
 
-        [Test]
-        public void IsLessThanWithDifferentCurrencies()
+        public class Equals
         {
-            var amount = Money.Dollar(16);
-            var result = amount < Money.Euro(16);
-            Assert.IsTrue(result);
-        }
+            [Test]
+            public void MoneyEqualsMethod()
+            {
+                var amount = Money.Dollar(20);
+                var equal = amount.Equals(Money.Dollar(20));
+                Assert.IsTrue(equal);
+            }
 
-        [Test]
-        public void IsGreaterThanOperator()
-        {
-            var amount = Money.Dollar(20);
-            var result = amount > Money.Dollar(16);
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void MoneyEqualsMethod()
-        {
-            var amount = Money.Dollar(20);
-            var equal = amount.Equals(Money.Dollar(20));
-            Assert.IsTrue(equal);
-        }
-
-        [Test]
-        public void FloatingPointTolerance()
-        {
-            var amount1 = Money.Dollar(20);
-            var amount2 = Money.Dollar(19.95f);
-            Debug.Log(amount2.ToString());
-            Assert.AreEqual(amount2, amount1);
+            [Test]
+            public void FloatingPointTolerance()
+            {
+                var amount1 = Money.Dollar(20);
+                var amount2 = Money.Dollar(19.95f);
+                Debug.Log(amount2.ToString());
+                Assert.AreEqual(amount2, amount1);
+            } 
         }
     }
-
-    #endregion
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.
