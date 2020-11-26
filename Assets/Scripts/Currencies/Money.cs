@@ -14,30 +14,27 @@ namespace Currencies
         
         public static Money operator -(Money left, Money right) => left.Subtract(right);
 
-        public static Money operator *(Money left, int right) => left.Multiply(right);
+        public static Money operator *(Money left, float right) => left.Multiply(right);
         
-        public static Money operator /(Money left, int right) => left.Divide(right);
+        public static Money operator /(Money left, float right) => left.Divide(right);
         
         public static bool operator <(Money left, Money right) => !left.IsGreaterThan(right);
 
         public static bool operator >(Money left, Money right) => left.IsGreaterThan(right);
 
-        private readonly int amount;
+        private readonly float amount;
 
         private readonly Currencies currency;
+        
+        public static Dictionary<Currencies, float> ExchangeRates => new Dictionary<Currencies, float> {{Currencies.Dollar, 1.0f}, {Currencies.SEK, 0.12f}, {Currencies.Euro, 1.2f}};
 
-        private readonly float exchangeRate;
-
-        private static Dictionary<Currencies, float> ExchangeRates => new Dictionary<Currencies, float> {{Currencies.Dollar, 1.0f}, {Currencies.SEK, 0.1f}, {Currencies.Euro, 2.0f}};
-
-        private Money(int amount, Currencies currency, float exchangeRate)
+        private Money(float amount, Currencies currency)
         { 
             this.amount = amount;
             this.currency = currency;
-            this.exchangeRate = exchangeRate;
         }
         
-        private static Money GenericCurrency(int amount, Currencies type)
+        private static Money GenericCurrency(float amount, Currencies type)
         {
             switch (type)
             {
@@ -52,22 +49,22 @@ namespace Currencies
             }
         }
 
-        public static Money Dollar(int amount) => new Money(amount, Currencies.Dollar, ExchangeRates[Currencies.Dollar]);
+        public static Money Dollar(float amount) => new Money(amount, Currencies.Dollar);
 
-        public static Money SEK(int amount) => new Money(amount, Currencies.SEK, ExchangeRates[Currencies.SEK]);
+        public static Money SEK(float amount) => new Money(amount, Currencies.SEK);
         
-        public static Money Euro(int amount) => new Money(amount, Currencies.Euro, ExchangeRates[Currencies.Euro]);
+        public static Money Euro(float amount) => new Money(amount, Currencies.Euro);
         
         public static Money Convert(Money convertFrom, Currencies convertTo)
         {
             switch (convertTo)
             {
                 case Currencies.Dollar:
-                    return Dollar(Mathf.RoundToInt(convertFrom.exchangeRate / ExchangeRates[convertTo] * convertFrom.amount));
+                    return Dollar(ExchangeRates[convertFrom.currency] / ExchangeRates[convertTo] * convertFrom.amount);
                 case Currencies.SEK:
-                    return SEK(Mathf.RoundToInt(convertFrom.exchangeRate / ExchangeRates[convertTo] * convertFrom.amount));
+                    return SEK(ExchangeRates[convertFrom.currency] / ExchangeRates[convertTo] * convertFrom.amount);
                 case Currencies.Euro:
-                    return Euro(Mathf.RoundToInt(convertFrom.exchangeRate / ExchangeRates[convertTo] * convertFrom.amount));
+                    return Euro(ExchangeRates[convertFrom.currency] / ExchangeRates[convertTo] * convertFrom.amount);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
             }
@@ -75,9 +72,9 @@ namespace Currencies
         
         public static void Convert(ref Money money, Currencies convertTo) => money = Convert(money, convertTo);
 
-        public Money Multiply(int factor) => GenericCurrency(Mathf.RoundToInt(factor * this.amount), currency);
+        public Money Multiply(float factor) => GenericCurrency(factor * this.amount, currency);
         
-        public Money Divide(int denominator) => GenericCurrency(Mathf.RoundToInt((float)this.amount / denominator), currency);
+        public Money Divide(float denominator) => GenericCurrency(this.amount / denominator, currency);
 
         public Money Add(Money money)
         {
@@ -106,23 +103,17 @@ namespace Currencies
         public override bool Equals(object obj)
         {
             if (!(obj is Money money)) return false;
-            if (money.currency != currency) {
-                return Convert(money, currency).amount == amount;
-            }
-            return money.amount == amount;
+            return Math.Abs(Convert(money, Currencies.Dollar).amount - Convert(this, Currencies.Dollar).amount) <= 0.05f;
         }
         
         public bool Equals(Money money)
         {
-            if (money.currency != currency) {
-                return Convert(money, currency).amount == amount;
-            }
-            return money.amount == amount;
+            return Math.Abs(Convert(money, Currencies.Dollar).amount - Convert(this, Currencies.Dollar).amount) <= 0.05f;
         }
 
-        public override int GetHashCode() => Mathf.RoundToInt(amount * exchangeRate);
+        public override int GetHashCode() => Mathf.RoundToInt(amount * ExchangeRates[currency]);
         
-        public override string ToString() => $"{this.amount} {currency}";
+        public override string ToString() => $"{this.amount:0.##} {currency}";
     }
 
     public enum Currencies
