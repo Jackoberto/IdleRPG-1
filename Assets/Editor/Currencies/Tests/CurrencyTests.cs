@@ -151,6 +151,13 @@ namespace Currencies.Tests
             Debug.Log(amount);
             Assert.True(amount == Money.Dollar(5));
         }
+        
+        [Test]
+        public void DollarCanBeAddedImplicitly()
+        {
+            var amount = Money.Dollar(20) + 5;
+            Assert.AreEqual(Money.Dollar(25), amount);
+        }
     }
     
     namespace ComparisonOperators

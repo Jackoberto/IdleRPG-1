@@ -37,21 +37,6 @@ namespace Currencies
             this.amount = amount;
             this.currency = currency;
         }
-        
-        private static Money Convert(float amount, Currencies type)
-        {
-            switch (type)
-            {
-                case Currencies.Dollar:
-                    return Dollar(amount);
-                case Currencies.SEK:
-                    return SEK(amount);
-                case Currencies.Euro:
-                    return Euro(amount);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-        }
 
         public static Money Dollar(float amount) => new Money(amount, Currencies.Dollar);
 
@@ -76,21 +61,21 @@ namespace Currencies
         
         public static void Convert(ref Money money, Currencies convertTo) => money = Convert(money, convertTo);
 
-        public Money Multiply(float factor) => Convert(factor * this.amount, currency);
+        public Money Multiply(float factor) => new Money(factor * this.amount, currency);
         
-        public Money Divide(float denominator) => Convert(this.amount / denominator, currency);
+        public Money Divide(float denominator) => new Money(this.amount / denominator, currency);
 
         public Money Add(Money money)
         {
             if (this.currency != money.currency) {
                 money = Convert(money, this.currency);
             }
-            return Convert(this.amount + money.amount, currency);
+            return new Money(this.amount + money.amount, currency);
         }
         
         public Money Add(float money)
         {
-            return Convert(this.amount + money, currency);
+            return new Money(this.amount + money, currency);
         }
         
         public Money Subtract(Money money)
@@ -98,12 +83,12 @@ namespace Currencies
             if (this.currency != money.currency) {
                 money = Convert(money, this.currency);
             }
-            return Convert(this.amount - money.amount, currency);
+            return new Money(this.amount - money.amount, currency);
         }
         
         public Money Subtract(float money)
         {
-            return Convert(this.amount - money, currency);
+            return new Money(this.amount - money, currency);
         }
         
         private bool IsGreaterThan(Money money)
